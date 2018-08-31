@@ -2,9 +2,12 @@ package blankthings.raincheckmvp.net.interactor
 
 import android.content.Context
 import blankthings.raincheckmvp.net.data.Photo
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 
-class PhotoInteractor(context: Context?) {
+class PhotoInteractor(context: Context?) : BaseInteractor() {
 
 //    private var photoDao: PhotoDao = DbInteractor(context).getPhotoDao()
 
@@ -57,5 +60,11 @@ class PhotoInteractor(context: Context?) {
 //            return
 //        photoDao.insertAllPhotos(photos)
 //    }
+
+    fun getPhotos() : Observable<List<Photo>> {
+        return apiService.getPhotos()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
 
 }

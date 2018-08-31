@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="blankthings.raincheckmvp.MainActivity">
+    tools:context="blankthings.raincheckmvp.ui.MainActivity">
 
     <FrameLayout
         android:id="@+id/main_container"

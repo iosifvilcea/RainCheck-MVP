@@ -1,7 +1,8 @@
-package blankthings.raincheckmvp
+package blankthings.raincheckmvp.ui
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import blankthings.raincheckmvp.R
 import blankthings.raincheckmvp.callback.FragmentInteractionCallback
 import blankthings.raincheckmvp.net.data.Photo
 import blankthings.raincheckmvp.ui.view.main.MainFragment

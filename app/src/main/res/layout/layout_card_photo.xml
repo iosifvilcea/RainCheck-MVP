@@ -51,7 +51,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/url"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@android:drawable/ic_dialog_alert"
             android:contentDescription="Photo"
             />
 

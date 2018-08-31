@@ -7,6 +7,7 @@ class MainPresenter(private var mainView : MainView?, private val photoInteracto
 
     fun init() {
         mainView?.addPhotos(photoInteractor.mockPhotos())
+        fetchPhotos()
     }
 
     fun teardown() {
@@ -15,6 +16,15 @@ class MainPresenter(private var mainView : MainView?, private val photoInteracto
 
     fun onItemClicked(itemPosition : Int) {
         mainView?.onPhotoSelected(photoInteractor.getPhotoById(itemPosition))
+    }
+
+    private fun fetchPhotos() {
+        photoInteractor.getPhotos()
+                .subscribe({
+                    mainView?.addPhotos(it)
+                }, {
+                    it.printStackTrace()
+                })
     }
 
 }
