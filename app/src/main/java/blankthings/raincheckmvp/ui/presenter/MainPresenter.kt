@@ -6,7 +6,6 @@ import blankthings.raincheckmvp.ui.view.main.MainView
 class MainPresenter(private var mainView : MainView?, private val photoInteractor: PhotoInteractor) {
 
     fun init() {
-        mainView?.addPhotos(photoInteractor.mockPhotos())
         fetchPhotos()
     }
 

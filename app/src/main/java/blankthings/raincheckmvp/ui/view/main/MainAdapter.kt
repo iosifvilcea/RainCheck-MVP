@@ -6,7 +6,7 @@ import blankthings.raincheckmvp.net.data.Photo
 
 class MainAdapter( private val listener: (Int) -> Unit) : RecyclerView.Adapter<PhotoViewHolder>() {
 
-    private lateinit var photos : List<Photo>
+    private var photos : List<Photo> = ArrayList()
 
     fun setPhotos(photos: List<Photo>) {
         this.photos = photos
