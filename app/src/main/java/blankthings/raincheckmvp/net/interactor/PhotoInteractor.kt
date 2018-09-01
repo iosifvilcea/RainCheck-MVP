@@ -15,7 +15,7 @@ class PhotoInteractor(context: Context?) : BaseInteractor() {
 
     lateinit var photoDao: PhotoDao
 
-    lateinit var photos : List<Photo>
+    var photos : List<Photo> = ArrayList()
 
     init {
         if (context != null) {
