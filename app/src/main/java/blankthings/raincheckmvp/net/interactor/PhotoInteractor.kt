@@ -54,6 +54,7 @@ class PhotoInteractor(context: Context?) : BaseInteractor() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext({
                     Log.d(PhotoInteractor::class.java.name, "Dispatching ${it.size} users from DB...")
+
                 })
     }
 

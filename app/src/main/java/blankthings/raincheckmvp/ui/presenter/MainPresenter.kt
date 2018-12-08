@@ -1,5 +1,7 @@
 package blankthings.raincheckmvp.ui.presenter
 
+import android.annotation.SuppressLint
+import android.util.Log
 import blankthings.raincheckmvp.net.interactor.PhotoInteractor
 import blankthings.raincheckmvp.ui.view.main.MainView
 
@@ -17,6 +19,7 @@ class MainPresenter(private var mainView : MainView?, private val photoInteracto
         mainView?.onPhotoSelected(photoInteractor.getPhotoById(itemPosition))
     }
 
+    @SuppressLint("CheckResult")
     private fun fetchPhotos() {
         photoInteractor.getPhotos()
                 .subscribe({

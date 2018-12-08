@@ -2,8 +2,10 @@ package blankthings.raincheckmvp.ui
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import blankthings.raincheckmvp.R
 import blankthings.raincheckmvp.callback.FragmentInteractionCallback
+import blankthings.raincheckmvp.listener.NetworkListener
 import blankthings.raincheckmvp.net.data.Photo
 import blankthings.raincheckmvp.ui.view.main.MainFragment
 import blankthings.raincheckmvp.ui.view.maindetail.MainDetailFragment
@@ -14,6 +16,7 @@ class MainActivity : AppCompatActivity(), FragmentInteractionCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupFragmentManager()
+        setupListeners()
     }
 
     // TODO - Remove and implement Navigation architecture component.
@@ -22,6 +25,10 @@ class MainActivity : AppCompatActivity(), FragmentInteractionCallback {
         supportFragmentManager.beginTransaction()
                 .add(R.id.main_container, MainFragment())
                 .commit()
+    }
+
+    private fun setupListeners() {
+        NetworkListener(this) { it -> onNetworkConnectionChanged(it) }
     }
 
     override fun onPhotoClicked(photoSelected : Photo) {
@@ -33,6 +40,14 @@ class MainActivity : AppCompatActivity(), FragmentInteractionCallback {
 
     override fun back() {
         supportFragmentManager.popBackStack()
+    }
+
+    private fun onNetworkConnectionChanged(isConnected : Boolean) {
+        if (isConnected) {
+            return
+        }
+
+        Toast.makeText(this, "No network connection.", Toast.LENGTH_LONG).show()
     }
 
 }
