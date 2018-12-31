@@ -7,15 +7,14 @@ import blankthings.raincheckmvp.net.db.PhotoDao
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 
 class PhotoInteractor(context: Context?) : BaseInteractor() {
 
-    val TAG = PhotoInteractor::class.java.name
-
-    lateinit var photoDao: PhotoDao
-
-    var photos : List<Photo> = ArrayList()
+    private var lastFetch : Long = 0
+    private var photos : List<Photo> = ArrayList()
+    private lateinit var photoDao: PhotoDao
 
     init {
         if (context != null) {
@@ -42,7 +41,7 @@ class PhotoInteractor(context: Context?) : BaseInteractor() {
         Observable.fromCallable { photoDao.insertAllPhotos(photos) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .subscribe { Log.d(TAG, "Saving ${photos.size} photos from API to DB...") }
+                .subscribe()
     }
 
 
@@ -52,10 +51,6 @@ class PhotoInteractor(context: Context?) : BaseInteractor() {
                 .toObservable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext({
-                    Log.d(PhotoInteractor::class.java.name, "Dispatching ${it.size} users from DB...")
-
-                })
     }
 
 
@@ -68,7 +63,34 @@ class PhotoInteractor(context: Context?) : BaseInteractor() {
 
 
     fun getPhotos() : Observable<List<Photo>> {
+        if (!isNewDataFetchAllowed()) {
+            return getPhotosFromDb()
+        }
+
+        lastFetch = System.currentTimeMillis()
         return Observable.concatArray(getPhotosFromDb(), getPhotosFromApi())
+    }
+
+    fun getForecast() {
+        apiService.get5DayForecast("60601")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    val result = it
+                    Log.e("PhotoInteractor", "wegood.")
+                }, {
+                    Log.e("PhotoInteractor", "Error.", it)
+                })
+    }
+
+
+    /**
+     * OpenWeatherMap APIs limit us to fetch the weather every 1 minute to prevent
+     * excessive API calls. This ensures that we only remotely fetch this data if 1 minute has elapsed.
+     */
+    private fun isNewDataFetchAllowed() : Boolean {
+        val timeDifference = System.currentTimeMillis() - lastFetch
+        return timeDifference > TimeUnit.MINUTES.toMillis(1)
     }
 
 }

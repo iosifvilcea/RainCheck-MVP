@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import blankthings.raincheckmvp.R
 import blankthings.raincheckmvp.callback.FragmentInteractionCallback
 import blankthings.raincheckmvp.net.data.Photo
@@ -60,6 +61,10 @@ class MainFragment : Fragment(), MainView {
 
     override fun addPhotos(photos: List<Photo>) {
         adapter.setPhotos(photos)
+    }
+
+    override fun showError(error: String?) {
+        Toast.makeText(context, error ?: "Oops. Cannot load information at this time.", Toast.LENGTH_LONG).show()
     }
 
     override fun onPhotoSelected(photoSelected: Photo) {

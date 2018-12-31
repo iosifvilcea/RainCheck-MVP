@@ -8,7 +8,8 @@ import blankthings.raincheckmvp.ui.view.main.MainView
 class MainPresenter(private var mainView : MainView?, private val photoInteractor: PhotoInteractor) {
 
     fun init() {
-        fetchPhotos()
+//        fetchPhotos()
+        photoInteractor.getForecast()
     }
 
     fun teardown() {
@@ -25,6 +26,7 @@ class MainPresenter(private var mainView : MainView?, private val photoInteracto
                 .subscribe({
                     mainView?.addPhotos(it)
                 }, {
+                    mainView?.showError(it.message)
                     it.printStackTrace()
                 })
     }

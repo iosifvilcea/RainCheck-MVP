@@ -19,8 +19,6 @@ class MainActivity : AppCompatActivity(), FragmentInteractionCallback {
         setupListeners()
     }
 
-    // TODO - Remove and implement Navigation architecture component.
-
     private fun setupFragmentManager() {
         supportFragmentManager.beginTransaction()
                 .add(R.id.main_container, MainFragment())

@@ -6,6 +6,8 @@ interface MainView {
 
     fun addPhotos(photos: List<Photo>)
 
+    fun showError(error: String?)
+
     fun onPhotoSelected(photoSelected: Photo)
 
 }
