@@ -8,10 +8,10 @@ class OpenWeather {
     var cod: String? = null
 
     @SerializedName("message")
-    var message: Double = 0.toDouble()
+    var message: Double = 0.0
 
     @SerializedName("cnt")
-    var cnt: Int = 0
+    var numberOfLinesReturnedByApi: Int = 0
 
     @SerializedName("list")
     var list: List<ResultList>? = null
@@ -19,9 +19,5 @@ class OpenWeather {
 
     @SerializedName("city")
     var city: City? = null
-
-    fun setResultList(resultList: List<ResultList>) {
-        this.list = resultList
-    }
 
 }
